@@ -6,6 +6,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.conatin{
+  font-size: 20px;
+  padding: 20px;
+  width: 100%;
+}
+label{
+  font-size: 20px;
+  padding: 5px;
+  color: rgb(33, 43, 16);
+  font-weight: 500;
+}
+Text
+.nav-bar{
+  padding: 20px;
+}
+div{
+  padding: 10px;
+}
+.nav_link{
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
