@@ -1,79 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import TextField from '@mui/material/TextField';
-import userAddress from '../actions/userAddress';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import { useLocation } from "react-router-dom";
 
+import userAddress from '../actions/userAddress';
 
 const url = "http://localhost:3008/products/myP";
-// const prodId='';
+
 const ProductsScreen = (props) => {
     const state = useState();
     const [name, setName] = useState();
-    // const [prodId,setprodId]=useState(null);
     const [products, setProducts] = useState(null);
     const location = useLocation();
     const prodId = props.prodId;
     useEffect(() => {
-        // alert('hi')
-        // setprodId('p1');
         async function getData() {
             const res = await axios.get(url + '?pid=' + prodId)
                 .then(res => {
                     console.log(res.data)
                     setProducts(res.data)
-                    // setprodId(res.data.product[0].id);
                 })
         }
         getData();
+        
 
 
     }, []);
 
     return (
         <>
-
-            {/* <Container maxWidth="lg" style={{marginTop:'50px'}}>
-            <TableContainer component={Paper} >
-      <Table sx={{ minWidth: 500 }} aria-label="simple table" >
-        <TableHead>
-          <TableRow>
-
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Availability</TableCell>
-            <TableCell align="right">ID</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {products && products.product.map((prd) => (
-            <TableRow
-              key={prd._id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-
-              <TableCell align="right">{prd.name}</TableCell>
-              <TableCell align="right">{prd.price}</TableCell>
-              <TableCell align="right">{prd.isAvailability}</TableCell>
-              <TableCell align="right">{prd.id}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </Container> */}
-            
 
     <table class="table table-success table-hover">
   <thead>
@@ -116,7 +70,7 @@ const Address = (props) => {
             cart: {
                 id: props.id
             },
-            orderStatus: 'pe',
+            orderStatus: 'pending',
             addressInfo:
             {
                 address: data.get('address'),
@@ -128,6 +82,8 @@ const Address = (props) => {
         }
         console.log(obj);
         userAddress(obj);
+        localStorage.setItem("city",city);
+        localStorage.removeItem("city",city);
     };
 
     return (
@@ -135,24 +91,7 @@ const Address = (props) => {
         <>
             <div style={{ width: '100%', display: 'flex' }}>
 
-                {/* <div>
-
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="address">Address</label><br />
-                        <TextField type="text" id="address" name="address" onChange={(e) => { setAddress(e.target.value) }} />
-                        <br /><br /><label htmlFor="city">City</label><br />
-                        <TextField type="text" id="city" name="city" onChange={(e) => { setCity(e.target.value) }} />
-                        <br /><br /><label htmlFor="state">State</label><br />
-                        <TextField type="text" id="state" name="state" onChange={(e) => { setState(e.target.value) }} />
-                        <br /><br /><label htmlFor="postalCode">PostalCode</label><br />
-                        <TextField type="text" id="postalCode" name="postalCode" onChange={(e) => { setPostalCode(e.target.value) }} /><br /><br />
-
-
-                        <Button variant="outlined" type="submit">Submit</Button>
-
-                        
-                    </form>
-                </div> */}
+             
                 <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Address</label>
@@ -180,10 +119,6 @@ const Address = (props) => {
 }
 
 const Order = (props) => {
-    const fld = 'product id is here';
-    // const location = useLocation();
-
-    // const {product_id}=location.state();
     const prodId = 'p1'
     console.log(prodId)
     return (
