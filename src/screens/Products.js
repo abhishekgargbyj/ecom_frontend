@@ -1,61 +1,51 @@
 import React,{useState,useEffect} from "react";
-import {Link} from "react-router-dom"
-import axios from "axios";
-import Address from "./Address";
-const url="http://localhost:3008/products";
+import { getAllProduct } from "../actions/productAction";
+import ShopIcon from '@mui/icons-material/Shop';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import useRefreshToken from "../hooks/useRefreshToken";
+import { useNavigate } from "react-router-dom";
 
 const ProductsScreen=()=>{
-    const state=useState();
-    const [name,setName]=useState();
     const [products,setProducts]=useState(null);
+    const refresh = useRefreshToken();
     useEffect(()=>{
-        // alert('hi')
-        async function getData(){
-            const res=await axios.get(url)
-            .then(res=>{
-                console.log(res.data)
-                setProducts(res.data)
-            })
+        const allProducts = async () => {
+            const data = await  getAllProduct();
+            setProducts(data);
         }
-        getData();
-    },[]);
-    return (
-       <>
-
-       {/* <div>
-       {products && <List products={products.product}/>}
-       </div> */}
+        allProducts();
        
-        <div className="contain" style={{display:'flex',height:'100px'}}>
-                <div className="list" style={{height:'200px',marginTop:'100px'}}>
-                    <p>Product</p>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Availability</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                       
+    },[]);
+   let navigate = useNavigate(); 
+     const routeChange = () =>{ 
+     let path = `/listProducts`; 
+     navigate(path);
+    } 
+    return ( 
+        <div>
 
-                            {products && products.product.map(prd => (<tr key={prd._id}>
-                            <td>{prd.name}</td>
-
-                            <td>{prd.price}</td>
-                            <td>{prd.isAvailability}</td>
-                            </tr>))}
-
-                        </tbody>
-                    </table>
-                   
+                <h1> Featured Products </h1>
+                <div className="d-flex flex-row flex-wrap">
+                {products && products.map( (product) => {
+                    return (
+                        <div className="card" style= {{width: "18rem", margin: "25px"}} key={product._id}>
+                            <img src={product.image} class="card-img-top" alt={product.name} />
+                            <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <p className="card-text"> {product.description} </p>
+                            <a href="#" className="btn btn-primary">Buy <ShopIcon/></a>
+                            <a href="#" className="btn btn-primary" style= {{ margin: "5px"}}> Add to Cart<ShoppingCartIcon/> </a>
+                        </div>
+                        </div>
+                    )
+                    })}
                 </div>
+               <button onClick={routeChange}>ProductList</button>  
+                {/* <button onClick={refresh} >
+                    ProductList
+                </button> */}
 
-                <Link to="/buy" state={{product_id:"p1"}}>Buy</Link>
-            </div>
-            
-        </>
-    )
+        </div> 
+        );
 }
 export default ProductsScreen;
