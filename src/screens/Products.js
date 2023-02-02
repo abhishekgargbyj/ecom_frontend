@@ -4,6 +4,7 @@ import ShopIcon from '@mui/icons-material/Shop';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useRefreshToken from "../hooks/useRefreshToken";
 import { useNavigate } from "react-router-dom";
+import Order from "./Order";
 
 const ProductsScreen=()=>{
     const [products,setProducts]=useState(null);
@@ -45,6 +46,7 @@ const ProductsScreen=()=>{
                     ProductList
                 </button> */}
 
+                <Order></Order>
         </div> 
         );
 }
