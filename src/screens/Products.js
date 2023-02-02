@@ -42,7 +42,7 @@ const ProductsScreen=()=>{
                 <div className="d-flex flex-row flex-wrap">
                 {products && products.map( (product) => {
                     return (
-                        <div className="card" style= {{width: "22rem", margin: "25px"}} key={product._id}>
+                        <div className="shadow card" style= {{width: "22rem", margin: "25px"}} key={product._id}>
                             <img src={product.image} class="card-img-top" alt={product.name} />
                             <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>

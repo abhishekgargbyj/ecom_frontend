@@ -25,11 +25,7 @@ export default function App() {
    <Routes>
     
     {/* public route */}
-    <Route path = "/" element = {<UserLogin />} />
-    <Route path="/register" element = {<RegisterUser/>} />
-    <Route path="/login/user" element= { <UserLogin/>} />
-    <Route path="/*" element = { <UserLogin/> } />
-    {/* <Route path="/completion" element={<Completion/>} /> */}
+    
 
     { /* protected route users and admin*/ }
     <Route element = {<PersistLogin/>}>
@@ -39,30 +35,27 @@ export default function App() {
       <Route path="/" element = {<ProductsScreen />} />
       <Route path="/myprofile" element={<MyProfile/>} />
       <Route path="/customer_support" element={<Customer/>} />
-    <Route path="/myorders" element={<OrdersScreen/>} />
-    <Route path="/completion" element={<Completion/>} />
-    <Route path="/buy" element={<Order/>} />
-    </Route>
+      <Route path="/myorders" element={<OrdersScreen/>} />
+      <Route path="/completion" element={<Completion/>} />
+      <Route path="/buy" element={<Order/>} />
+     </Route>
    
     { /* protected routes only admin */ }
     <Route element = {<RequireAuth allowedRoles = {[2]} /> }>
       <Route path="/listProducts" element = {<ListProduct/>}/>
-      <Route path="/*" element={<ProductsScreen />} />
-      <Route path="/" element = {<ProductsScreen />} />
       <Route path="/addProduct" element = {<AddProduct/>} />
       <Route path="/search" element={<ProductsScreen/>} />
-      {/* <Route path="/completion" element={<Completion/>} /> */}
       <Route path="/editProduct" element = {<EditProduct/>}/>
       <Route path="/admin_orders" element={<AdminOrders/>} />
+       <Route path="/*" element={<ProductsScreen />} />
+      <Route path="/" element = {<ProductsScreen />} />
     </Route>
-    </Route>
+    </Route>  
+    <Route path="/register" element = {<RegisterUser/>} />
+    <Route path="/login/user" element= { <UserLogin/>} />
+    <Route path = "/" element = {<UserLogin />} />
+    <Route path="/*" element = { <UserLogin/> } />
 
-    <Route path="/home" element = {<Home/>}/>
-    
-    
-    
-    
-    
   </Routes> 
 
   );
