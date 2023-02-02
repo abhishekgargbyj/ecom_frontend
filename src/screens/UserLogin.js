@@ -18,8 +18,7 @@ import {  useNavigate, useLocation } from 'react-router-dom';
 const theme = createTheme();
 
 export default function UserLogin() {
-  const {auth, setAuth } = useAuth();
-
+  const {setAuth} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -37,10 +36,9 @@ export default function UserLogin() {
     }).then((response)=>{
         const accessToken  = response?.data?.accessToken;
         const roles = response?.data?.roles;
-        console.log(accessToken, roles)
         setAuth({ email,password, roles, accessToken })
-        console.log(auth)
-        navigate(from, { replace: true });
+        let path = `/products`; 
+        navigate(path);
     })
 }
     
@@ -98,9 +96,9 @@ export default function UserLogin() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
                 <Link to="/register">

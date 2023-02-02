@@ -5,7 +5,10 @@ const URL1="http://localhost:3008/products/myP";
 
 
 const getAllProduct = async () => {
-    const res=await axios.get(URL)
+    const res=await axios.get(URL,{
+        headers: {'Content-Type': 'application/json'},
+        withCredentials: true
+    })
     return res.data;
     
 }
