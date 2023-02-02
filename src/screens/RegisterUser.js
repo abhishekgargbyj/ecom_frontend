@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link, useNavigate } from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,11 +11,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from "react-router-dom"
 import { userRegister } from '../actions/userActions';
 const theme = createTheme();
 
 export default function RegisterUser() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -25,6 +26,8 @@ export default function RegisterUser() {
       password: data.get('password'),
     }
     userRegister(obj);
+    let path = `/login/user`
+    navigate(path)
 
   };
 
