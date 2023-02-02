@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const URL="http://localhost:3000/products";
-const URL1="http://localhost:3008/products/myP";
+const URL1="http://localhost:3000/products/myP";
 
 
 const getAllProduct = async () => {

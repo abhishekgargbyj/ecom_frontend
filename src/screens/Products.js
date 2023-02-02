@@ -3,22 +3,22 @@ import ShopIcon from '@mui/icons-material/Shop';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import Order from "./Order";
-
-import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 import Header from "./Navebar/Header";
+import { Button } from "@mui/material";
+
 const ProductsScreen=()=>{
     const [products,setProducts]=useState(null);
     const  axiosPrivate = useAxiosPrivate();
-    const URL="http://localhost:3000/products";
+    const navigate = useNavigate();
+
 
     const {auth} = useAuth();
 
-   
-
     useEffect(()=>{
         const allProducts = async () => {
-            const res=await axiosPrivate.get('products',{
+            const res=await axios.get('products',{
             headers: {
                 Authorization: 'Bearer ' + auth.accessToken,
                 'Content-Type': 'application/json'
@@ -30,6 +30,11 @@ const ProductsScreen=()=>{
         }
         allProducts();
         },[]); 
+
+        const handleClickBuy=async (id)=>{
+            console.log('clicked')
+            navigate(`/buy?${id}`);
+        }
     return ( 
         <div>
                 <Header/>
@@ -42,7 +47,7 @@ const ProductsScreen=()=>{
                             <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
                             <p className="card-text"> {product.description} </p>
-                           <Button variant="contained">Buy <ShopIcon/></Button>
+                           <Button variant="contained" onClick={(e)=>{handleClickBuy(product._id)}}>Buy <ShopIcon/></Button>
                            <Button variant="contained" sx ={{ml: "5px"}}>Add to Cart<ShoppingCartIcon/></Button> 
                         </div>
                         </div>

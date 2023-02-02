@@ -8,8 +8,8 @@ import useAuth from "../../hooks/useAuth";
 
 const DrawerComp = () => {
     const [openDrawer, setOpenDrawer] = useState(false)
-    const PAGES = ["Search", "Your Account", "Cart", "Customer Support"];
-    const PATHS = ['/search','/profile', '/userCart', '/listProducts']
+    const PAGES = ["Search", "Your Account", "Customer Support"];
+    const PATHS = ['/search','/profile', '/listProducts']
 
     const {auth} = useAuth();
     const logout = useLogout();
@@ -22,6 +22,12 @@ const DrawerComp = () => {
     if(auth?.roles?.length >= 2){
         PAGES.push("Product Management");
         PATHS.push('/listProducts');
+        PAGES.push("All Orders");
+        PATHS.push('/admin_orders');
+    }
+    if(auth?.roles?.length == 1){
+        PAGES.push("Cart");
+        PATHS.push('/myorders');
     }
     const onClickHandle = async(path) =>{
         navigate(path);
