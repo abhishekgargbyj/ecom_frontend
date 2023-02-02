@@ -40,8 +40,8 @@ const OrdersScreen = () => {
                 <td >{row._id}</td>
                 <td >{row.cart.name}</td>
                 <td >{row.total}</td>
+                <td >{row.total}</td>
                 <td >{row.orderStatus}</td>
-                <td >{row.protein}</td>
               </tr>
             ))}
           </tbody>

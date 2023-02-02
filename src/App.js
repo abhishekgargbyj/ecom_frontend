@@ -12,8 +12,12 @@ import ListProduct from './screens/ListProduct';
 import UserLogin from './screens/UserLogin';
 import Layout from './screens/Layout';
 import RequireAuth from './screens/RequiredAuth';
+import Completion from './screens/Completion';
+// const path = require('path')
+// require('dotenv').config('');
 
 export default function App() {
+  
   return (
     <>
 
@@ -38,6 +42,7 @@ export default function App() {
     <Route path="/myorders" element={<OrdersScreen/>} />
     <Route path="/search" element={<ProductsScreen/>} />
     <Route path="/admin-orders" element={<AdminOrders/>} />
+    <Route path="/completion" element={<Completion/>} />
     <Route path="/buy" element={<Order/>} />
     </Route>
     </Routes> 
