@@ -14,7 +14,12 @@ const OrdersScreen = () => {
   const emailId = auth.email;
   useEffect(() => {
     async function getData() {
-      const res = await axios.get('orders/myorders?emailId=' + emailId)
+      const res = await axios.get('orders/myorders?emailId=' + emailId,{
+        headers: {
+            Authorization: 'Bearer ' + auth.accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true})
         .then(res => {
           console.log(res.data)
           setOrders(res.data)
@@ -24,7 +29,12 @@ const OrdersScreen = () => {
     }
 
     async function getUserData() {
-      const res = await axios.get('user/myuser?emailId=' + emailId)
+      const res = await axios.get('user/myuser?emailId=' + emailId,{
+        headers: {
+            Authorization: 'Bearer ' + auth.accessToken,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true})
         .then(res => {
           console.log(res.data)
 
