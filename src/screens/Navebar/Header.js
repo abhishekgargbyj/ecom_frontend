@@ -10,11 +10,17 @@ const Header = () => {
     const isMatch = useMediaQuery(theme.breakpoints.down('md'));
     const navigate = useNavigate();
     const {auth} = useAuth();
-    const PAGES = ["Search", "Your Account", "Cart", "Customer Support", "Products"];
-    const PATHS = ['/search','/profile', '/userCart', '/listProducts', "/products"]
+    const PAGES = ["Search", "Your Account", "Customer Support", "Products"];
+    const PATHS = ['/search','/myprofile',  '/customer_support', "/products"]
     if(auth?.roles?.length >= 2){
         PAGES.push("Product Management");
         PATHS.push('/listProducts');
+        PAGES.push("All Orders");
+        PATHS.push('/admin_orders');
+    }
+    if(auth?.roles?.length == 1){
+        PAGES.push("Cart");
+        PATHS.push('/myorders');
     }
     const logout = useLogout();
      const signOut = async () => {

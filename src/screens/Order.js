@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import Header from "./Navebar/Header";
 import userAddress from '../actions/userAddress';
 import doPayment from "../actions/doPayment";
-import { getProduct } from "../actions/productAction";
-const url = "http://localhost:3008/products/myP";
+import useAuth from "../hooks/useAuth";
+
 const ProductsScreen = (props) => {
 
     const state = useState();
@@ -16,7 +16,7 @@ const ProductsScreen = (props) => {
     const prodId = props.prodId;
     useEffect(() => {
         async function getData() {
-            const res = await axios.get(url + '?pid=' + prodId)
+            const res = await axios.get( 'products/myP?pid=' + prodId)
                 .then(res => {
                     // console.log(res.data)
                     setProducts(res.data)
@@ -28,6 +28,7 @@ const ProductsScreen = (props) => {
 
     return (
         <>
+        <Header/>
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
@@ -54,7 +55,7 @@ const ProductsScreen = (props) => {
                         </table>
                     </div>
                     <div className="col-md-6">
-                        <Address pid={products && products.product[0].id}
+                        <Address pid={products && products.product[0]._id}
                             pname={products && products.product[0].name}
                             pprice={products && products.product[0].price}
                             pqty={products && products.product[0].quantity} />
@@ -74,7 +75,7 @@ const Address = (props) => {
     const [city, setCity] = useState();
     const [state, setState] = useState();
     const [postalCode, setPostalCode] = useState();
-
+    const {auth} = useAuth();
     const handleSubmit = async (event) => {
         let orderData = {};
         event.preventDefault();
@@ -92,6 +93,7 @@ const Address = (props) => {
                 price: props.pprice,
                 quantity: props.pqty
             },
+            userID:auth.email,
             orderStatus: 'pending',
             paymentStatus: 'pending',
             addressInfo:
@@ -115,7 +117,7 @@ const Address = (props) => {
                     message: 'Mobile Number / Customer Name is required',
                 };
             }
-            let razorPayCallbackUrl = "http://localhost:3000/completion";
+            let razorPayCallbackUrl = "http://localhost:3001/completion";
             const payload = {
                 customerName: customerName,
                 course: 'coursea',
@@ -180,8 +182,9 @@ const Address = (props) => {
 }
 
 const Order = (props) => {
-    const prodId = 'p1'
-    console.log(prodId)
+    const path=useLocation();
+    const prodId=path.search.slice(1);
+    console.log(prodId);
     return (
         <>
             {/* <div className="container"> */}
