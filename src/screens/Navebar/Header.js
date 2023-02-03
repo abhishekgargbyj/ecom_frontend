@@ -2,14 +2,16 @@ import { AppBar, Toolbar,Tabs,Tab,Button, useMediaQuery, useTheme, Typography, D
 import React from "react";
 import DrawerComp from "./DrawerComp";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import useLogout from "../../hooks/useLogout"
 
 const Header = () => {
+    
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down('md'));
     const navigate = useNavigate();
     const {auth} = useAuth();
+    const path   = useLocation().pathname;
     const PAGES = ["Search", "Your Account", "Customer Support", "Products"];
     const PATHS = ['/search','/myprofile',  '/customer_support', "/products"]
     if(auth?.roles?.length >= 2){
@@ -44,7 +46,7 @@ const Header = () => {
                                 </>
                             ): (
                                 <>
-                                    <Tabs value={0} textColor="inherit">
+                                    <Tabs value={PATHS.findIndex((x)=>(x===path))} textColor="inherit">
                                         {
                                             PAGES.map((page,index) =>(
                                                 <Tab key={index} label = {page} onClick = {e => onClickHandle(PATHS[index])} />
