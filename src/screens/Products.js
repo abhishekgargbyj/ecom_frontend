@@ -25,14 +25,12 @@ const ProductsScreen=()=>{
             },
             withCredentials: true}
         )
-            console.log(res.data)
             setProducts(res.data);
         }
         allProducts();
         },[]); 
 
         const handleClickBuy=async (id)=>{
-            console.log('clicked')
             navigate(`/buy?${id}`);
         }
     return ( 
@@ -43,7 +41,7 @@ const ProductsScreen=()=>{
                 {products && products.map( (product) => {
                     return (
                         <div className="shadow card" style= {{width: "22rem", margin: "25px"}} key={product._id}>
-                            <img src={product.image} class="card-img-top" alt={product.name} />
+                            <img src={product.image} className="card-img-top" alt={product.name} />
                             <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
                             <p className="card-text"> {product.description} </p>
