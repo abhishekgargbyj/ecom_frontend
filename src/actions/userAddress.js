@@ -1,8 +1,7 @@
-import axios from "axios";
+import axios from "../api/axios";
+
 const userAddress=async (obj)=>{
-    const total=10;
-    const url="http://localhost:3000/orders";
-    const res=await axios.post(url+'?total='+total,obj)
+    const res=await axios.post('orders/',obj)
     .then((res)=>{
         console.log(res);
     })

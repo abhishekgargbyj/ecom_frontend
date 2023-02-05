@@ -1,6 +1,7 @@
 import  React from 'react';
 import {Route,Routes} from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
 import OrdersScreen from './screens/Orders';
 import MyProfile from './screens/MyProfile';
 import ProductsScreen from './screens/Products';
@@ -12,8 +13,6 @@ import UserLogin from './screens/UserLogin';
 import RequireAuth from './screens/RequiredAuth';
 import Completion from './screens/Completion';
 import Customer from './screens/Customer';
-// const path = require('path')
-// require('dotenv').config('');
 import PersistLogin from './screens/PersistLogin';
 import RegisterUser from './screens/RegisterUser';
 import AddProduct from './screens/AddProduct';

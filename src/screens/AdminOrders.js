@@ -28,14 +28,14 @@ const AdminOrders = () => {
     <>
     <Header/>
       <div className="container">
-        <table class="table table-success table-hover">
+        <table class="table table-striped table-hover" border='1' style={{backgroundColor:'#faf0fc'}}>
           <thead>
             <tr>
               <th scope="col">Email</th>
               <th scope="col">Product</th>
               <th scope="col">Price</th>
-              <th scope="col">Total</th>
               <th scope="col">Status</th>
+              <th scope="col">Pic</th>
             </tr>
           </thead>
           <tbody>
@@ -43,9 +43,9 @@ const AdminOrders = () => {
               <tr scope="row" key={row._id}>
                 <td >{row.userID}</td>
                 <td >{row.cart.name}</td>
-                <td >{row.total}</td>
-                <td >{row.total}</td>
+                <td >{row.cart.price}</td>
                 <td >{row.orderStatus}</td>
+                <td > <img src={row.cart.image} width="100"/> </td>
               </tr>
             ))}
           </tbody>

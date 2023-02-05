@@ -27,6 +27,7 @@ export default function UserLogin() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email')
+    
     const password = data.get('password')
     const res = await axios.post('login', {email,password}, {
         headers: {'Content-Type': 'application/json'},
@@ -35,6 +36,8 @@ export default function UserLogin() {
         const accessToken  = response?.data?.accessToken;
         const roles = response?.data?.roles;
         setAuth({ email,password, roles, accessToken })
+        
+    localStorage.setItem('userid',email)
         let path = `/products`; 
         navigate(path);
     })

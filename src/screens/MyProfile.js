@@ -4,14 +4,14 @@ import Header from "./Navebar/Header";
 import useAuth from "../hooks/useAuth";
 
 const MyProfile = () => {
-  const {auth} = useAuth();
-  console.log(auth.first_name);
-  const emailId = auth.email;
+  const { auth } = useAuth();
   const state = useState();
   const [users, setUsers] = useState(null);
+  const emailID = localStorage.getItem('userid');
+
   useEffect(() => {
     async function getData() {
-      const res = await axios.get('user/myuser?emailId=' + emailId)
+      const res = await axios.get('user/myuser?emailId=' + emailID)
         .then(res => {
           console.log(res.data)
 
@@ -21,17 +21,19 @@ const MyProfile = () => {
 
     }
     getData();
-    
 
   }, []);
 
   return (
     <>
-    <Header/>
-      <h2 >My Profile</h2>
+      <Header />
+
+      <figure class="text-center">
+        <b className="text-muted" style={{ fontSize: '30px', fontDisplay: 'bold' }}>My Profile</b>
+      </figure>
 
       <div className="container">
-        <table class="table table-success table-hover">
+        <table class="table table-striped table-hover" border='1' style={{ backgroundColor: '#faf0fc' }}>
           <thead>
             <tr>
               <th scope="col">FName</th>
