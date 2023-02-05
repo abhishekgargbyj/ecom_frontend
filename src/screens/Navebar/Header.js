@@ -42,7 +42,7 @@ const Header = () => {
                             isMatch ? (
                                 <>
                                     <Typography>
-                                        Byjus..
+                                    <img src={require('./logo.png')} style = {{height: "50px"}}/>
                                     </Typography>
                                     <DrawerComp />
                                 </>
