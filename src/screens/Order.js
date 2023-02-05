@@ -11,54 +11,55 @@ const ProductsScreen = (props) => {
     const state = useState();
     const [name, setName] = useState();
     const [products, setProducts] = useState(null);
+    const [users, setUsers] = useState();
     const [products1, setProducts1] = useState(null);
-    const location = useLocation();
+    const emailId = localStorage.getItem('userid');
     const prodId = props.prodId;
     useEffect(() => {
         async function getData() {
-            const res = await axios.get( 'products/myP?pid=' + prodId)
+            const res = await axios.get('products/myP?pid=' + prodId)
                 .then(res => {
-                    // console.log(res.data)
                     setProducts(res.data)
                 })
             return res;
         }
         getData();
+
+        async function getUserData1() {
+            const res = await axios.get('user/myuser?emailId=' + emailId)
+                .then(res => {
+                    setUsers(res.data)
+                })
+        }
+        getUserData1();
     }, []);
 
     return (
         <>
-        <Header/>
+            <Header />
+
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6">
-                        <table class="table table-success table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Availability</th>
-                                    <th scope="col">ID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products && products.product.map((prd) => (
-                                    <tr scope="row" key={prd._id}>
-                                        <td >{prd.name}</td>
-                                        <td >{prd.price}</td>
-                                        <td >{prd.isAvailability}</td>
-                                        <td >{prd.id}</td>
-                                    </tr>
-                                ))}
+                    {products && products.product.map((product) => {
+                        return (
+                            <div className="shadow card" style={{ width: "22rem", margin: "25px" }} key={product._id}>
+                                <img src={product.image} class="card-img-top" alt={product.name} />
+                                <div className="card-body">
+                                    <h5 className="card-title">Name - {product.name}</h5>
+                                    <h5 className="card-title">Price - {product.price}</h5>
+                                    <p className="card-text">Description - {product.description} </p>
 
-                            </tbody>
-                        </table>
-                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
+
                     <div className="col-md-6">
                         <Address pid={products && products.product[0]._id}
                             pname={products && products.product[0].name}
                             pprice={products && products.product[0].price}
-                            pqty={products && products.product[0].quantity} />
+                            ppic={products && products.product[0].image}
+                            uname={users && users.user[0].first_name} />
                     </div>
 
                 </div>
@@ -72,28 +73,33 @@ const Address = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [address, setAddress] = useState();
+
     const [city, setCity] = useState();
     const [state, setState] = useState();
     const [postalCode, setPostalCode] = useState();
-    const {auth} = useAuth();
+    const emailId = localStorage.getItem('userid');
+
+
+
+
+
     const handleSubmit = async (event) => {
         let orderData = {};
         event.preventDefault();
 
-        const result = await sendPaymentLink(9999988888, 'rvi', 'abc@gmail.com', props.pprice, props.pname, orderData._id);
+        const result = await sendPaymentLink(9999988888, props.uname, emailId, props.pprice, props.pname, orderData._id);
 
         const data = new FormData(document.getElementById("form-id"));
 
         const obj =
         {
-            total: "10",
             cart: {
                 id: props.pid,
                 name: props.pname,
                 price: props.pprice,
-                quantity: props.pqty
+                image: props.ppic
             },
-            userID:auth.email,
+            userID: emailId,
             orderStatus: 'pending',
             paymentStatus: 'pending',
             addressInfo:
@@ -124,15 +130,9 @@ const Address = (props) => {
                 salesEmail: "sales@gmail.com",
                 provider: 'RAZORPAY',
                 phone: phone,
-                // amount: process.env.PACKAGE_AMOUNT,
                 amount: price,
                 callbackUrl: razorPayCallbackUrl,
                 customerEmail: emailID,
-                notes: {
-                    orderId: orderId
-                }
-                // expireBy: expireBy,
-                // source: gConst.pageSource
             }
             const data = {
                 phoneNumber: payload.phone
@@ -148,12 +148,10 @@ const Address = (props) => {
         }
     }
 
-
     return (
 
         <>
             <div style={{ width: '100%', display: 'flex' }}>
-
 
                 <form onSubmit={handleSubmit} id="form-id">
                     <div className="mb-3">
@@ -182,23 +180,12 @@ const Address = (props) => {
 }
 
 const Order = (props) => {
-    const path=useLocation();
-    const prodId=path.search.slice(1);
+    const path = useLocation();
+    const prodId = path.search.slice(1);
     console.log(prodId);
     return (
         <>
-            {/* <div className="container"> */}
-            {/* <div className="row"> */}
-            {/* <div className="col-md-6"> */}
             <ProductsScreen prodId={prodId} />
-            {/* </div> */}
-            <div className="col-md-6">
-                {/* <Address id={prodId} /> */}
-                {/* </div> */}
-            </div>
-            {/* </div> */}
-
-
         </>
     )
 }

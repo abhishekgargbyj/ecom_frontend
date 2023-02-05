@@ -26,7 +26,7 @@ const DrawerComp = () => {
         PATHS.push('/admin_orders');
     }
     if(auth?.roles?.length == 1){
-        PAGES.push("Cart");
+        PAGES.push("Orders");
         PATHS.push('/myorders');
     }
     const onClickHandle = async(path) =>{
