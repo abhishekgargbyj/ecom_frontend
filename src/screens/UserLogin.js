@@ -47,7 +47,7 @@ function handleCallbackResponse(response){
       const userObject = jwtDecode(response.credential);
       const obj = {
         first_name:      userObject.given_name,
-        email:     userObject.email
+        email:           userObject.email
       }
       console.log(obj);
       const res = axios.post('login/loginThroughOAuth', obj, {
@@ -59,6 +59,7 @@ function handleCallbackResponse(response){
         const email = obj.email;
         console.log(roles,accessToken)
         setAuth({ email, roles, accessToken })
+        localStorage.setItem('userid',email)
         let path = `/products`; 
         navigate(path);
     })

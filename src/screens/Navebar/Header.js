@@ -32,6 +32,8 @@ const Header = () => {
     const onClickHandle = async(path) =>{
         navigate(path);
     }
+    let val = PATHS.findIndex((x)=>(x===path));
+    val = val<0?PATHS.findIndex((x)=>(x==="/listProducts")):val;
     return ( 
         <React.Fragment>
            <AppBar sx={{background: "#9400d3", mb: "20px"}} position="sticky">
@@ -40,13 +42,13 @@ const Header = () => {
                             isMatch ? (
                                 <>
                                     <Typography>
-                                        Byjus..
+                                    <img src={require('./logo.png')} style = {{height: "50px"}}/>
                                     </Typography>
                                     <DrawerComp />
                                 </>
                             ): (
                                 <>
-                                    <Tabs value={PATHS.findIndex((x)=>(x===path))} textColor="inherit">
+                                    <Tabs value={val} textColor="inherit">
                                         {
                                             PAGES.map((page,index) =>(
                                                 <Tab key={index} label = {page} onClick = {e => onClickHandle(PATHS[index])} />
