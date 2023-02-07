@@ -12,7 +12,7 @@ const OrdersScreen = () => {
   const [products, setProducts] = useState(null);
   const [users, setUsers] = useState(null);
   const { auth } = useAuth();
-  const emailId = auth.email;
+  const emailId = localStorage.getItem('userid');
   useEffect(() => {
     async function getOrderData() {
       const res = await axios.get('orders/myorders?emailId=' + emailId, {
@@ -53,7 +53,7 @@ const OrdersScreen = () => {
       <Header />
 
       <div className="container">
-        <table class="table table-striped table-hover" border='1' style={{ backgroundColor: '#faf0fc' }}>
+        <table className="table table-striped table-hover" border='1' style={{ backgroundColor: '#faf0fc' }}>
           <thead>
             <tr>
               <th scope="col">Name</th>
