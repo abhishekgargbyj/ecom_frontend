@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Navebar/Header";
 import userAddress from '../actions/userAddress';
 import doPayment from "../actions/doPayment";
+import userPaymentPending from "../actions/userPaymentPending";
 import useAuth from "../hooks/useAuth";
 
 const ProductsScreen = (props) => {
@@ -77,19 +78,16 @@ const Address = (props) => {
     const [city, setCity] = useState();
     const [state, setState] = useState();
     const [postalCode, setPostalCode] = useState();
+    const [phone, setPhone] = useState();
     const emailId = localStorage.getItem('userid');
-
-
-
-
 
     const handleSubmit = async (event) => {
         let orderData = {};
+        let paymentPending = {};
         event.preventDefault();
-
-        const result = await sendPaymentLink(9999988888, props.uname, emailId, props.pprice, props.pname, orderData._id);
-
         const data = new FormData(document.getElementById("form-id"));
+        const phn=data.get('phn')
+        const result = await sendPaymentLink(phn, props.uname, emailId, props.pprice, props.pname, orderData._id);
 
         const obj =
         {
@@ -102,6 +100,7 @@ const Address = (props) => {
             userID: emailId,
             orderStatus: 'pending',
             paymentStatus: 'pending',
+            phone:data.get('phn'),
             addressInfo:
             {
                 address: data.get('address'),
@@ -112,7 +111,16 @@ const Address = (props) => {
             referenceId: result.data.referenceId
 
         }
+        const objPaymentPending =
+        {
+            userName: emailId,
+            phone:data.get('phn'),
+            address: data.get('address'),
+            referenceId: result.data.referenceId
+
+        }
         orderData = await userAddress(obj);
+        paymentPending = await userPaymentPending(objPaymentPending);
     };
 
     async function sendPaymentLink(phone, customerName, emailID, price, product, orderId) {
@@ -138,6 +146,7 @@ const Address = (props) => {
                 phoneNumber: payload.phone
             };
             result = await doPayment(payload);
+            // console.log(result.data.paymentUrl)
             window.location.href = result.data.paymentUrl;
             return result;
         }
@@ -155,20 +164,24 @@ const Address = (props) => {
 
                 <form onSubmit={handleSubmit} id="form-id">
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Address</label>
-                        <input type="text" className="form-control" id="address" name="address" onChange={(e) => { setAddress(e.target.value) }} />
+                        <label htmlFor="exampleInputEmail1" className="form-label">Address*</label>
+                        <input type="text" required className="form-control" id="address" name="address" onChange={(e) => { setAddress(e.target.value) }} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">City</label>
-                        <input type="text" className="form-control" id="city" name="city" onChange={(e) => { setCity(e.target.value) }} />
+                        <label htmlFor="exampleInputEmail1" className="form-label">City*</label>
+                        <input type="text" required className="form-control" id="city" name="city" onChange={(e) => { setCity(e.target.value) }} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">State</label>
-                        <input type="text" className="form-control" id="state" name="state" onChange={(e) => { setState(e.target.value) }} />
+                        <label htmlFor="exampleInputEmail1" className="form-label">State*</label>
+                        <input type="text" required className="form-control" id="state" name="state" onChange={(e) => { setState(e.target.value) }} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">PostalCode</label>
-                        <input type="text" className="form-control" id="postalCode" name="postalCode" onChange={(e) => { setPostalCode(e.target.value) }} />
+                        <label htmlFor="exampleInputEmail1" className="form-label">PostalCode*</label>
+                        <input type="text" required className="form-control" id="postalCode" name="postalCode" onChange={(e) => { setPostalCode(e.target.value) }} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Phone Number*</label>
+                        <input type="text" required className="form-control" id="phn" name="phn" onChange={(e) => { setPhone(e.target.value) }} />
                     </div>
                     <div className="mb-3">
                         <button type="submit" className="btn btn-primary"  >Submit</button>
