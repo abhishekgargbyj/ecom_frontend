@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Navebar/Header";
 import userAddress from '../actions/userAddress';
 import doPayment from "../actions/doPayment";
-import userPaymentPending from "../actions/userPaymentPending";
+import customerdetails from "../actions/customerDetails";
 import useAuth from "../hooks/useAuth";
 
 const ProductsScreen = (props) => {
@@ -111,7 +111,7 @@ const Address = (props) => {
             referenceId: result.data.referenceId
 
         }
-        const objPaymentPending =
+        const objCust =
         {
             userName: emailId,
             phone:data.get('phn'),
@@ -120,7 +120,7 @@ const Address = (props) => {
 
         }
         orderData = await userAddress(obj);
-        paymentPending = await userPaymentPending(objPaymentPending);
+        paymentPending = await customerdetails(objCust);
     };
 
     async function sendPaymentLink(phone, customerName, emailID, price, product, orderId) {
@@ -202,5 +202,6 @@ const Order = (props) => {
         </>
     )
 }
+
 export default Order;
 export { Address, ProductsScreen }

@@ -46,7 +46,7 @@ const ProductsScreen=()=>{
                             <h5 className="card-title">{product.name}</h5>
                             <p className="card-text"> {product.description} </p>
                            <Button variant="contained" onClick={(e)=>{handleClickBuy(product._id)}}>Buy <ShopIcon/></Button>
-                           <Button variant="contained" sx ={{ml: "5px"}}>Add to Cart<ShoppingCartIcon/></Button> 
+                           {/* <Button variant="contained" sx ={{ml: "5px"}}>Add to Cart<ShoppingCartIcon/></Button>  */}
                         </div>
                         </div>
                     )
