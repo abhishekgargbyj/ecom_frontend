@@ -7,7 +7,6 @@ import MyProfile from './screens/MyProfile';
 import ProductsScreen from './screens/Products';
 import Order from './screens/Order'
 import AdminOrders from './screens/AdminOrders';
-import Home from './screens/Home'
 import ListProduct from './screens/ListProduct';
 import UserLogin from './screens/UserLogin';
 import RequireAuth from './screens/RequiredAuth';
@@ -17,6 +16,7 @@ import PersistLogin from './screens/PersistLogin';
 import RegisterUser from './screens/RegisterUser';
 import AddProduct from './screens/AddProduct';
 import EditProduct from './screens/EditPrduct';
+import CompletionPending from './screens/CompletionPending';
 
 export default function App() {
   
@@ -36,6 +36,7 @@ export default function App() {
       <Route path="/customer_support" element={<Customer/>} />
       <Route path="/myorders" element={<OrdersScreen/>} />
       <Route path="/completion" element={<Completion/>} />
+      <Route path="/completionpending" element={<CompletionPending/>} />
       <Route path="/buy" element={<Order/>} />
      </Route>
    

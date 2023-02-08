@@ -11,4 +11,4 @@ const getAllProduct = async () => {
     
 }
 
-export { getAllProduct, getProduct}
+export { getAllProduct}
